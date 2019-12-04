@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cf2f175c-0798-4b92-9ad9-dd425ed6ae81" name="Default Changelist" comment="" />
+    <list default="true" id="cf2f175c-0798-4b92-9ad9-dd425ed6ae81" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Commands/RetrieverCron.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/RetrieverCron.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Commands/TaskerCron.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/TaskerCron.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProjectsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProjectsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Task.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Task.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/project/projectsResults.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/project/projectsResults.blade.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -19,6 +28,9 @@
         <option value="blade" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -107,6 +119,7 @@
     </include_path>
   </component>
   <component name="ProjectId" id="1UHcFFliBFnqMdhfFKtm0NlrOqS" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -114,6 +127,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="C:/xampp1/htdocs/brainiacs_v2" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -149,7 +163,7 @@
       <updated>1575016855831</updated>
       <workItem from="1575016857325" duration="4994000" />
       <workItem from="1575034651620" duration="1738000" />
-      <workItem from="1575272290288" duration="25606000" />
+      <workItem from="1575272290288" duration="42248000" />
     </task>
     <servers />
   </component>
@@ -169,6 +183,10 @@
       <screen x="1360" y="-166" width="1920" height="1040" />
     </state>
     <state x="1821" y="-4" key="SettingsEditor/0.0.1360.728/1360.-166.1920.1040@1360.-166.1920.1040" timestamp="1575272956270" />
+    <state x="1961" y="80" width="700" height="530" key="recent.locations.popup" timestamp="1575449550516">
+      <screen x="1360" y="-166" width="1920" height="1040" />
+    </state>
+    <state x="1961" y="80" width="700" height="530" key="recent.locations.popup/0.0.1360.728/1360.-166.1920.1040@1360.-166.1920.1040" timestamp="1575449550516" />
     <state x="1983" y="59" width="672" height="678" key="search.everywhere.popup" timestamp="1575031334713">
       <screen x="1360" y="-166" width="1920" height="1040" />
     </state>

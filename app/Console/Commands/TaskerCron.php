@@ -81,7 +81,8 @@ class TaskerCron extends Command
             $location_id = $project_query->location_id;
 
             /*            $post_array[$post_id] = array(*/
-            $post_array[] = array(
+            $my_unq_id = mt_rand(0, 30000000);
+            $post_array[$my_unq_id] = array(
 
                 "se_id" => $se_id,
                 "se_language" => $se_language,
@@ -115,7 +116,7 @@ class TaskerCron extends Command
                                 'string_time'=>time()]);*/
 
                             Task::create(['keyword_id' => $keyword_id,'project_id' => $project_query, 'user_id'=>$user_id,'task_API_id'=>$task['task_id'],
-                                'string_time'=>time()]);
+                                'string_time'=>time(), 'my_unq_id' =>$task['post_id']]);
 
                         }
 

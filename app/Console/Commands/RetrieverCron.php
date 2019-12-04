@@ -42,26 +42,28 @@ class RetrieverCron extends Command
      */
     public function handle()
     {
+      /*  $results_compare=DB::table('results')->get('result_post_id');
+        dd($results_compare);*/
         //SCOTI DIN BD
         $jobs=DB::table('tasks')->get();
         $job_task_ids=array();
-        $results_compare=DB::table('results')->get();
 /*        dd($results_compare);*/
-        foreach ($results_compare as $compare){
-            $results_task_API_id=$compare->result_task_id;
-            dd($results_task_API_id);
-        }
+
 
         foreach ($jobs as $job) {
 /*            $task_id=$job->id;*/
+            $string_time=$job->string_time;
+            $current_time=time();
+            $current_time_15_ago=$current_time - 360;
+            if ($current_time_15_ago <= $string_time ){
+
+                $job_tasks = $job->task_API_id;
+                /*            $project_id = $job->project_id;*/
+                /*            $task_keyword_id=$job->keyword_id;*/
+                $job_task_ids[] = $job_tasks;
+            }
 
 
-
-
-            $job_tasks = $job->task_API_id;
-/*            $project_id = $job->project_id;*/
-/*            $task_keyword_id=$job->keyword_id;*/
-            $job_task_ids[] = $job_tasks;
         }
 
         require('C:\xampp\htdocs\brainiacs_v3\resources\files\RestClient.php');
@@ -83,18 +85,25 @@ class RetrieverCron extends Command
 
             $results = $serp_result['results']['organic']/*['0']['result_url']*/;
 /*            dd($results);*/
+
             foreach ($results as $result) {
 /*                dd($result);*/
 
 /*                $user_id=DB::table('tasks')->where('task_API_id', $result['task_id'])->value('user_id');*/
 
-                $task_id=Task::where('task_API_id', 'LIKE', $result['task_id'])->value('id');
-                $user_id=Task::where('task_API_id', 'LIKE', $result['task_id'])->value('user_id');
-                $project_id=Task::where('task_API_id', 'LIKE', $result['task_id'])->value('project_id');
 
-                Result::create(['task_id' => $task_id, 'keyword_id'=>$result['key_id'],  'project_id' => $project_id, 'user_id'=>$user_id, 'result_task_id' => $result['task_id'],
-                 'result_post_id'=>$result['post_id'], 'result_se_id'=>$result['se_id'], 'result_loc_id'=>$result['loc_id'], 'key_id'=>$result['key_id'],
-                 'post_key'=>$result['post_key'], 'result_position'=>$result['result_position'], 'result_datetime'=>$result['result_datetime'], 'result_url'=>$result['result_url']]);
+                {
+
+                    $task_id=Task::where('task_API_id', 'LIKE', $result['task_id'])->value('id');
+                    $user_id=Task::where('task_API_id', 'LIKE', $result['task_id'])->value('user_id');
+                    $project_id=Task::where('task_API_id', 'LIKE', $result['task_id'])->value('project_id');
+
+                    Result::create(['task_id' => $task_id, 'keyword_id'=>$result['key_id'],  'project_id' => $project_id, 'user_id'=>$user_id, 'result_task_id' => $result['task_id'],
+                        'result_post_id'=>$result['post_id'], 'result_se_id'=>$result['se_id'], 'result_loc_id'=>$result['loc_id'], 'key_id'=>$result['key_id'],
+                        'post_key'=>$result['post_key'], 'result_position'=>$result['result_position'], 'result_datetime'=>$result['result_datetime'], 'result_url'=>$result['result_url']]);
+
+                    //Update Tasks = verified = 1
+                }
 
             }
 

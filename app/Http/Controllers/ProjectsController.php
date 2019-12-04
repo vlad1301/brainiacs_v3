@@ -162,12 +162,35 @@ class ProjectsController extends Controller
 
         $project_result=Project::findOrFail($id);
         $domain=$project_result->domain;
-            $results = Result::where('result_url', 'LIKE', "%{$domain}%")->groupBy('result_datetime')->pluck('result_datetime')->get();
-            $results->all();
-            dd($results);
-        $number=count($results);
 
-        return view('project.projectsResults', compact('results', 'number'));
+        $results = Result::select("post_key")->where('result_url', 'LIKE', "%{$domain}%")->orderBy("post_key")->distinct()->get();
+        dd($results);
+        $header = array();
+        foreach($results as $result){
+            $dates = DB::table("results")->select("result_datetime")->where("post_key", $result->post_key)->orderBy("result_datetime")->distinct()->get();
+            foreach($dates as $date):
+                if(!in_array($date->result_datetime, $header))
+                {
+                    $header[] = $date->result_datetime;
+                }
+            endforeach;
+        }
+
+        $rezultate = array();
+        $i = 0;
+        foreach($results as $cuvant_cheie):
+            foreach($header as $data):
+                $rezultat = DB::table("results")->select("result_position")->where('result_url', 'LIKE', "%{$domain}%")
+                    ->where("post_key", $cuvant_cheie->post_key)->where("result_datetime", $data)->get();
+                if(!$rezultat->count())
+                    $rezultate[$i][] = "-";
+                else
+                    $rezultate[$i][] = $rezultat[0]->result_position;
+            endforeach;
+            $i += 1;
+        endforeach;
+
+        return view('project.projectsResults', ["keywords" => $results, "dates" => $header, "results" => $rezultate]);
 
     }
 

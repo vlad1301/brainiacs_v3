@@ -13,6 +13,7 @@ class Task extends Model
             'project_id',
             'user_id',
             'task_API_id',
-            'string_time'
+            'string_time',
+            'my_unq_id'
         ];
 }

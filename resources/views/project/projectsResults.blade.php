@@ -5,6 +5,8 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     <title>All task results</title>
 
 </head>
@@ -16,37 +18,32 @@
 
     <h2>Basic HTML Table</h2>
 
-    <table style="width:100%">
+    <table style="width:100%" id="rezultate">
 
-        <?php echo $number ?>
+    <thead>
+        <tr>
+            <th>Keyword</th>
+            <?php foreach($dates as $date): ?>
+            <th>{{ $date }}</th>
+            <?php endforeach; ?>
+        </tr>
+    </thead>
+    <tbody>
+
+    <?php $t = 0; ?>
+    @foreach ($keywords as $keyword)
 
         <tr>
-            <th>ID</th>
-            <th>Data si ora interogare</th>
-            <th>Keyword</th>
-            <th>URL</th>
-            <th>Pozitia</th>
-            <th>Locatia</th>
-            <th>Motorul de cautare</th>
-            <th>Data</th>
+            <td align="center">{{ $keyword['post_key'] }}</td>
+            <?php foreach($results[$t] as $result): ?>
+            <th>{{ $result }}</th>
+            <?php endforeach; ?>
+
+
         </tr>
-
-        @foreach ($results as $result)
-
-            <tr>
-                <td align="center">{{$result['id']}}</td>
-                <td align="center">{{$result['result_datetime']}}</td>
-                <td align="center">{{$result['post_key']}}</td>
-                <td align="center">{{$result['result_url']}}</td>
-                <td align="center">{{$result['result_position']}}</td>
-                <td align="center">{{$result['result_loc_id']}}</td>
-                <td align="center">{{$result['result_se_id']}}</td>
-
-
-            </tr>
-
-        @endforeach
-
+        <?php $t += 1; ?>
+    @endforeach
+    </tbody>
     </table>
 
 </div>
@@ -55,5 +52,13 @@
     @yield('footer')
 
 </div>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+
+<script>
+    $(document).ready(function(){
+       $("#rezultate").DataTable();
+    });
+</script>
 </body>
 </html>
