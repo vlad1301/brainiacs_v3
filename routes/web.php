@@ -13,8 +13,12 @@
 
 /*Route::get('/', 'HomeController@index')->name('home');*/
 
+use App\Project;
+
 Route::get('/', function () {
-    return view('welcome');
+    $projects=Project::all();
+
+    return view('project.view_projects', compact('projects'));
 });
 
 Auth::routes();

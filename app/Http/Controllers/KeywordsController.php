@@ -106,11 +106,20 @@ class KeywordsController extends Controller
     {
         $project=Project::findOrFail($id);
         $project_id=$project->id;
+        $user['id'] = $project->user_id;
 
         $keyword=$request->keyword;
-        $user['id'] = Auth::user()->id;
+        $keyword=preg_split('/\r\n|[\r\n]/', $keyword);
 
-        Keyword::create(['project_id'=>$project_id, 'value'=>$keyword, 'user_id'=>$user['id']]);
+        foreach ($keyword as $search_key_keyword)
+        {
+            Keyword::create(['project_id' => $project_id, 'user_id' => $user['id'], 'value' => $search_key_keyword]);
+
+        }
+
+       /* $user['id'] = Auth::user()->id;
+
+        Keyword::create(['project_id'=>$project_id, 'value'=>$keyword, 'user_id'=>$user['id']]);*/
     }
 
 

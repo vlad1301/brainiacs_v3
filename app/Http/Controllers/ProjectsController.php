@@ -160,14 +160,23 @@ class ProjectsController extends Controller
     public function view_projects_results($id)
     {
 
-        $project_result=Project::findOrFail($id);
-        $domain=$project_result->domain;
+        $project_result=Project::findOrFail($id); // id=1->vola
+        $domain=$project_result->domain; //vola.ro
 
-        $results = Result::select("post_key")->where('result_url', 'LIKE', "%{$domain}%")->orderBy("post_key")->distinct()->get();
-        dd($results);
+        $results = Result::select("post_key") //arata doar cuvintele cheie
+            ->where('result_url', 'LIKE', "%{$domain}%") // unde result_url =vola.ro
+            ->orderBy("post_key")// ordoneaza dupa cuvinte cheie
+            ->distinct() // insa doar cele distince/diferite
+            ->get(); // afiseaza doar cuvintele distince
+
         $header = array();
         foreach($results as $result){
-            $dates = DB::table("results")->select("result_datetime")->where("post_key", $result->post_key)->orderBy("result_datetime")->distinct()->get();
+            $dates = DB::table("results")
+                ->select("result_datetime")
+                ->where("post_key", $result->post_key)
+                ->orderBy("result_datetime")
+                ->distinct()
+                ->get();
             foreach($dates as $date):
                 if(!in_array($date->result_datetime, $header))
                 {
@@ -180,12 +189,17 @@ class ProjectsController extends Controller
         $i = 0;
         foreach($results as $cuvant_cheie):
             foreach($header as $data):
-                $rezultat = DB::table("results")->select("result_position")->where('result_url', 'LIKE', "%{$domain}%")
-                    ->where("post_key", $cuvant_cheie->post_key)->where("result_datetime", $data)->get();
+                $rezultat = DB::table("results")
+                    ->select("result_position")
+                    ->where('result_url', 'LIKE', "%{$domain}%")
+                    ->where("post_key", $cuvant_cheie->post_key)
+                    ->where("result_datetime", $data)
+                    ->get();
                 if(!$rezultat->count())
                     $rezultate[$i][] = "-";
                 else
                     $rezultate[$i][] = $rezultat[0]->result_position;
+/*                    dd($rezultate[$i]);*/
             endforeach;
             $i += 1;
         endforeach;

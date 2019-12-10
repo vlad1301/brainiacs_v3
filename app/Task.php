@@ -14,6 +14,7 @@ class Task extends Model
             'user_id',
             'task_API_id',
             'string_time',
-            'my_unq_id'
+            'my_unq_id',
+            'verified'
         ];
 }

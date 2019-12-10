@@ -15,19 +15,25 @@ class CreateResultsTable extends Migration
     {
         Schema::create('results', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('task_id');
-            $table->integer('keyword_id');
             $table->integer('project_id');
+
+            $table->string('post_key');
+            $table->string('result_datetime');
+
+            $table->bigInteger('result_position');
+            $table->longText('result_url');
+
+            $table->integer('keyword_id');
+
+            $table->integer('task_id');
+
             $table->integer('user_id');
             $table->bigInteger('result_task_id');
             $table->string('result_post_id');
             $table->bigInteger('result_se_id');
             $table->bigInteger('result_loc_id');
             $table->string('key_id');
-            $table->string('post_key');
-            $table->bigInteger('result_position');
-            $table->string('result_datetime');
-            $table->longText('result_url');
+
             $table->timestamps();
         });
     }

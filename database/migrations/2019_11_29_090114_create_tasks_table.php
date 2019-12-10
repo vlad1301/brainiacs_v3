@@ -19,6 +19,8 @@ class CreateTasksTable extends Migration
             $table->integer('project_id');
             $table->integer('user_id');
             $table->bigInteger('task_API_id');
+            $table->boolean('verified')->default(0);
+
             $table->string('string_time'); // type 1970 format
 /*            $table->timestamps();*/
             $table->timestamp('created_at')->useCurrent();
