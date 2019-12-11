@@ -178,43 +178,23 @@
                                     <button type="button" class="btn btn-pill btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         Select Project
                                     </button>
+
                                     <div class="dropdown-menu dropdown-menu-fit dropdown-menu-md">
                                         <ul class="kt-nav kt-nav--bold kt-nav--md-space kt-margin-t-20 kt-margin-b-20">
+                                            @foreach($projects as $project)
                                             <li class="kt-nav__item">
-                                                <a class="kt-nav__link active" href="demo5/project-dashboard.html">
+                                                <a class="kt-nav__link active" href="{{ route('view_projects_results', $project->id) }}">
                                                     <span class="kt-nav__link-icon"><i class="flaticon-feed"></i></span>
-                                                    <span class="kt-nav__link-text">Pici.ro</span>
+                                                    <span class="kt-nav__link-text">{{$project['name']}} </span>
                                                 </a>
                                             </li>
-                                            <li class="kt-nav__item">
-                                                <a class="kt-nav__link" href="demo5/project-dashboard.html">
-                                                    <span class="kt-nav__link-icon"><i class="flaticon-feed"></i></span>
-                                                    <span class="kt-nav__link-text">iUni.ro</span>
-                                                </a>
-                                            </li>
-                                            <li class="kt-nav__item">
-                                                <a class="kt-nav__link" href="demo5/project-dashboard.html">
-                                                    <span class="kt-nav__link-icon"><i class="flaticon-feed"></i></span>
-                                                    <span class="kt-nav__link-text">Clickbrainiacs.com</span>
-                                                </a>
-                                            </li>
-                                            <li class="kt-nav__item">
-                                                <a class="kt-nav__link" href="demo5/project-dashboard.html">
-                                                    <span class="kt-nav__link-icon"><i class="flaticon-feed"></i></span>
-                                                    <span class="kt-nav__link-text">Fabricadevacante.ro</span>
-                                                </a>
-                                            </li>
-                                            <li class="kt-nav__separator"></li>
-                                            <li class="kt-nav__item">
-                                                <a class="kt-nav__link" href="demo5/users-management.html">
-                                                    <span class="kt-nav__link-icon"><i class="flaticon2-user"></i></span>
-                                                    <span class="kt-nav__link-text">Users Management</span>
-                                                </a>
-                                            </li>
+                                            @endforeach
+
+
                                         </ul>
                                     </div>
                                     <button type="button" class="btn btn-default dropdown-toggle">
-                                        <a class="kt-nav__link" href="demo5/add-new-project.html">
+                                        <a class="kt-nav__link" href="{{ route("set_project") }}">
                                             Add New Project
                                         </a>
                                     </button>
@@ -909,6 +889,64 @@
                                 <div class="kt-section">
                                     <div class="kt-section__content">
 
+                                            @if(isset($projects))
+
+
+                                        {{--MY CODE INSERTED HERE--}}
+
+                                        <div class="container">
+                                            <h2>All projects</h2>
+
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                <tr>
+                                                    <th>Project Name</th>
+                                                    <th>Domain</th>
+                                                    <th>Search Engine</th>
+                                                    <th>Language</th>
+                                                    <th>Location</th>
+                                                    <th>CronJob</th>
+                                                    {{-- <th>task_id</th>--}}
+                                                    {{--  <th>search_engine_id</th>--}}
+                                                    {{--<th>location_id</th>
+                                                    <th>search_engine_id</th>--}}
+                                                </tr>
+                                                </thead>
+
+                                                <tbody>
+
+                                                @foreach($projects as $project)
+
+                                                    <tr>
+                                                        <td>{{$project['name']}}</td>
+                                                        <td>{{$project['domain']}}</td>
+                                                        <td>{{$project['engine']}}</td>
+                                                        <td>{{$project['language']}}</td>
+                                                        <td>{{$project['location']}}</td>
+                                                        <td>{{$project['cronjob']}}</td>
+
+                                                        <td><a href="{{ route('view_projects_results', $project->id) }}" class="btn btn-info">Open project</a></td>
+                                                        <td><a href="{{ route('projects.edit', $project->id) }}" class="btn btn-info">Edit project</a></td>
+                                                        <td><a href="{{ route('set_keyword', $project->id) }}" class="btn btn-primary">Add keywords</a></td>
+
+
+
+                                                    </tr>
+
+                                                @endforeach
+
+                                            </table>
+
+                                            {{--
+                                                <button type="submit"  class="btn btn-primary btn-lg" onclick="window.location='{{ route("set_keyword") }}'">ADD KEYWORD</button>
+                                            --}}
+                                        </div>
+
+                                        @else
+
+                                        {{--END OF MY CODE INSERTED HERE--}}
+
+
                                         <div class="alert alert-info fade show" role="alert">
                                             <div class="alert-icon"><i class="flaticon-questions-circular-button"></i></div>
                                             <div class="alert-text">You have not added any project yet!</div>
@@ -921,7 +959,10 @@
                                     </div>
                                 </div>
 
-                                <!--end::Section-->
+
+
+                                    @endif
+                            <!--end::Section-->
 
 
 

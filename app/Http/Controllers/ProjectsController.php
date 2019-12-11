@@ -318,7 +318,7 @@ class ProjectsController extends Controller
 
     public function save_project(Request $request)
     {
-
+    //dd($request);
         /*if SAVE button is clicked*/
         if (Input::get('save'))
         {
@@ -337,6 +337,7 @@ class ProjectsController extends Controller
             $project_name = $request->project_name;
             $project_url = $request->project_url;
             $user['id'] = Auth::user()->id;
+            //$user['id'] = 10;
             /*            $user['name'] = Auth::user()->name;*/
             $search_engine = $request->se_name;
             $se_language = $request->se_language;
@@ -346,22 +347,28 @@ class ProjectsController extends Controller
             /*   dd($frequency);*/
             //$loc_name_canonical=Location::where('loc_name_canonical', 'LIKE', "%{$loc_name}%")->get();
 
-            $se_id = DB::table('engines')->where('se_name', 'LIKE', $search_engine)->where('se_language', 'LIKE', $se_language)->pluck('se_id');
+            /*$se_id = DB::table('engines')->where('se_name', 'LIKE', $search_engine)->where('se_language', 'LIKE', $se_language)->pluck('se_id');
 
             $loc_id = DB::table('locations')->select('loc_id')->where('loc_name', 'LIKE', $loc_name)->where('loc_type', 'LIKE', 'City')
-                ->pluck('loc_id');
+                ->pluck('loc_id');*/
+
+            $se_id[0] = 1;
+
+            $loc_id[0] =1;
+
             /*        Project::create($input);*/
 
             Project::create(['name' => $project_name, 'domain' => $project_url, 'user_id' => $user['id'], 'engine' => $search_engine, 'engine_id' => $se_id[0],
                 'location' => $loc_name, 'location_id' => $loc_id[0], 'language' => $se_language, 'cronjob' => $cronjob]);
-
+/*            Project::create(['name' => $project_name, 'domain' => $project_url, 'engine' => $search_engine, 'engine_id' => $se_id[0],
+                'location' => $loc_name, 'location_id' => $loc_id[0], 'language' => $se_language, 'cronjob' => $cronjob])*/;
             /*            Session::flash('flash_message', 'Task successfully added!');*/
 
             //return redirect()->back();
 
 
-            $projects = Project::all();
-            return view('project.view_projects', compact('projects'));
+            /*$projects = Project::all();
+            return view('project.view_projects', compact('projects'));*/
 
         } /*if SAVE & ADD KEYWORD button is clicked*/
         elseif (Input::get('save_add_keyword'))

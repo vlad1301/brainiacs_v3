@@ -31,7 +31,7 @@
 
     <!--begin::Page Vendors Styles(used by this page) -->
     <link href="./assets/vendors/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
-    <link href="./assets/css/demo5/pages/wizard/wizard-2.css" rel="stylesheet" type="text/css" />
+    <link href="./assets/css/demo1/pages/wizard/wizard-2.css" rel="stylesheet" type="text/css" />
     <!--end::Page Vendors Styles -->
 
     <!--begin:: Global Mandatory Vendors -->
@@ -87,6 +87,14 @@
 <!-- begin::Page loader -->
 
 <!-- end::Page Loader -->
+
+@if($errors->any())
+    <div class="alert alert-danger">
+        @foreach($errors->all() as $error)
+            <p>{{ $error }}</p>
+        @endforeach
+    </div>
+@endif
 
 <!-- begin:: Page -->
 
@@ -1007,9 +1015,11 @@
                                         <div class="kt-grid__item kt-grid__item--fluid kt-wizard-v2__wrapper">
 
                                             <!--begin: Form Wizard Form-->
-                                            <form class="kt-form" id="kt_form">
-
+                                            {{--<form class="kt-form" id="kt_form" >--}}
+                                                <form method="POST" action={{route("save_project")}} class="kt-form" id="kt_form" autocomplete="off">
                                                 <!--begin: Form Wizard Step 1-->
+                                                    {{ csrf_field() }}
+
                                                 <div class="kt-wizard-v2__content" data-ktwizard-type="step-content" data-ktwizard-state="current">
                                                     <div class="kt-heading kt-heading--md">Add new project</div>
                                                     <div class="kt-form__section kt-form__section--first">
@@ -1018,36 +1028,50 @@
                                                                 <div class="col-xl-6">
                                                                     <div class="form-group">
                                                                         <label>Project Name</label>
-                                                                        <input type="tel" class="form-control" name="project-name" placeholder="" value="">
+                                                                        <input type="text" class="form-control" name="project_name" id="project_name" placeholder="" value="">
                                                                         <span class="form-text text-muted">Please enter name for your project.</span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-xl-6">
                                                                     <div class="form-group">
                                                                         <label>Website Name</label>
-                                                                        <input type="text" class="form-control" name="website-url" placeholder="" value="">
+                                                                        <input type="text" class="form-control" name="project_url"  id="project_url" placeholder="" value="">
                                                                         <span class="form-text text-muted">Please use the full website URL.</span>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label>Search engine</label>
-                                                                <input type="text" class="form-control" name="fname" placeholder="" value=".">
+                                                                <input type="text" class="form-control" name="se_name" id="se_name" placeholder="" value="">
                                                                 <span class="form-text text-muted"></span>
+                                                                <div id="search_engine">
+                                                                </div>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label>Location</label>
-                                                                <input type="text" class="form-control" name="lname" placeholder="" value=".">
+                                                                <input type="text" class="form-control" name="se_location" id="se_location" placeholder="" value="">
                                                                 <span class="form-text text-muted"></span>
+                                                                <div id="search_location">
+                                                                </div>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label>Language</label>
-                                                                <input type="text" class="form-control" name="lname" placeholder="" value="">
+                                                                <input type="select" class="form-control" name="se_language" id="se_language" placeholder="" value="">
                                                                 <span class="form-text text-muted"></span>
+                                                                <div id="search_language">
+                                                                </div>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label>Check frequency</label>
-                                                                <input type="text" class="form-control" name="lname" placeholder="Weekly" value="">
+
+                                                                <select name="cronjob" id="cronjob" class="form-control input-lg">
+                                                                    <option value="1">Daily</option>
+                                                                    <option value="3">Once every 3 days</option>
+                                                                    <option value="7">Weekly</option>
+                                                                    <option value="30">Monthly</option>
+                                                                </select>
+
+                                                                {{--<input type="text" class="form-control" name="lname" placeholder="Weekly" value="">--}}
                                                                 <span class="form-text text-muted">Please select how often do you want to check the rankings.</span>
                                                             </div>
 
@@ -1055,251 +1079,21 @@
                                                     </div>
                                                 </div>
 
-                                                <!--end: Form Wizard Step 1-->
 
-                                                <!--begin: Form Wizard Step 2-->
-                                                <div class="kt-wizard-v2__content" data-ktwizard-type="step-content">
-                                                    <div class="kt-heading kt-heading--md">Competition</div>
-                                                    <div class="kt-form__section kt-form__section--first">
-                                                        <div class="kt-wizard-v2__form">
-                                                            <div class="row">
-                                                                <div class="col-xl-12">
-                                                                    <div class="form-group">
-                                                                        <label>URL Competitor 1</label>
-                                                                        <input type="text" class="form-control" name="address1" placeholder="" value=".">
-                                                                        <span class="form-text text-muted">Please enter a vaid URL.</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-xl-12">
-                                                                    <div class="form-group">
-                                                                        <label>URL Competitor 1</label>
-                                                                        <input type="text" class="form-control" name="address1" placeholder="" value=".">
-                                                                        <span class="form-text text-muted">Please enter a vaid URL.</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-xl-12">
-                                                                    <div class="form-group">
-                                                                        <label>URL Competitor 3</label>
-                                                                        <input type="text" class="form-control" name="address1" placeholder="" value=".">
-                                                                        <span class="form-text text-muted">Please enter a vaid URL.</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-xl-12">
-                                                                    <div class="form-group">
-                                                                        <label>URL Competitor 4</label>
-                                                                        <input type="text" class="form-control" name="address1" placeholder="" value=".">
-                                                                        <span class="form-text text-muted">Please enter a vaid URL.</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-xl-12">
-                                                                    <div class="form-group">
-                                                                        <label>URL Competitor 5</label>
-                                                                        <input type="text" class="form-control" name="address1" placeholder="" value=".">
-                                                                        <span class="form-text text-muted">Please enter a vaid URL.</span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <!--end: Form Wizard Step 2-->
-
-                                                <!--begin: Form Wizard Step 3-->
-                                                <div class="kt-wizard-v2__content" data-ktwizard-type="step-content">
-                                                    <div class="kt-heading kt-heading--md">Add Keywords</div>
-                                                    <div class="kt-section">
-                                                        <div class="kt-section__content kt-section__content--solid">
-                                                            <p class="lead">
-                                                                Add the keywords that you want to track. You can also group them in different categories, in order to get more organised reports.
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="kt-form__section kt-form__section--first">
-                                                        <div class="kt-wizard-v2__form">
-                                                            <div class="form-group">
-                                                                <label>Keyword Group</label>
-                                                                <select name="delivery" class="form-control">
-                                                                    <option value="overnight" selected>General Group</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                </span>
-
-                                                <!--end: Form Wizard Step 3-->
-
-                                                <!--begin: Form Wizard Step 4-->
-                                                <div class="kt-wizard-v2__content" data-ktwizard-type="step-content">
-                                                    <div class="kt-heading kt-heading--md">Crawler settings</div>
-
-                                                    <div class="kt-form__section kt-form__section--first">
-                                                        <div class="kt-wizard-v2__form">
-                                                            <div class="row">
-                                                                <label class="col-lg-6 col-form-label">Run crawler - once - after project setup:</label>
-                                                                <div class="col-lg-9 col-xl-4">
-																		<span class="kt-switch kt-switch--icon-check">
-																			<input type="hidden" name="builder[layout][footer][self][fixed]" value="false">
-																			<label>
-																			<input type="checkbox" name="builder[layout][footer][self][fixed]" value="true">
-																			<span></span>
-																</label>
-														</span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-xl-12">
-                                                                    <div class="form-group">
-                                                                        <label>Automatic Crawling Frequency :</label>
-                                                                        <select name="loccountry" class="form-control">
-                                                                            <option value="">Select</option>
-                                                                            <option value="AF">Disabled</option>
-                                                                            <option value="AX">Each week</option>
-                                                                            <option value="AL">Each month</option>
-                                                                            <option value="DZ">Every 3 months</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="kt-heading kt-heading--md">Backlink manager settings</div>
-
-                                                    <div class="kt-form__section kt-form__section--first">
-                                                        <div class="kt-wizard-v2__form">
-                                                            <div class="row">
-                                                                <label class="col-lg-6 col-form-label">Email Notification (when backlink is missing):</label>
-                                                                <div class="col-lg-9 col-xl-4">
-																		<span class="kt-switch kt-switch--icon-check">
-																			<input type="hidden" name="builder[layout][footer][self][fixed]" value="false">
-																			<label>
-																			<input type="checkbox" name="builder[layout][footer][self][fixed]" value="true">
-																			<span></span>
-																			</label>
-														</span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-xl-12">
-                                                                    <div class="form-group">
-                                                                        <label>Backlinks check frequency:</label>
-                                                                        <select name="loccountry" class="form-control">
-                                                                            <option value="">Select</option>
-                                                                            <option value="AF">Disabled</option>
-                                                                            <option value="AX">Each day</option>
-                                                                            <option value="AL">Each week</option>
-                                                                            <option value="DZ">Every 2 weeks</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <!--end: Form Wizard Step 4-->
-
-                                                <!--begin: Form Wizard Step 5-->
-                                                <div class="kt-wizard-v2__content" data-ktwizard-type="step-content">
-                                                    <div class="kt-heading kt-heading--md">Email Notifications</div>
-                                                    <div class="kt-form__section kt-form__section--first">
-                                                        <div class="kt-wizard-v2__form">
-                                                            <div class="row">
-                                                                <label class="col-lg-6 col-form-label">On crawling task completion:</label>
-                                                                <span class="kt-switch kt-switch--icon-check">
-																			<input type="hidden" name="builder[layout][footer][self][fixed]" value="false">
-																		<label>
-																			<input type="checkbox" name="builder[layout][footer][self][fixed]" value="true">
-																			<span></span>
-																		</label>
-                                                            </div>
-                                                            <div class="row">
-                                                                <label class="col-lg-6 col-form-label">On rank tracker completion:</label>
-                                                                <span class="kt-switch kt-switch--icon-check">
-																			<input type="hidden" name="builder[layout][footer][self][fixed]" value="false">
-																		<label>
-																			<input type="checkbox" name="builder[layout][footer][self][fixed]" value="true">
-																			<span></span>
-																		</label>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <!--end: Form Wizard Step 5-->
-
-                                                <!--begin: Form Wizard Step 6-->
-                                                <div class="kt-wizard-v2__content" data-ktwizard-type="step-content">
-                                                    <div class="kt-heading kt-heading--md">Review your Details and Submit</div>
-                                                    <div class="kt-form__section kt-form__section--first">
-                                                        <div class="kt-wizard-v2__review">
-                                                            <div class="kt-wizard-v2__review-item">
-                                                                <div class="kt-wizard-v2__review-title">
-                                                                    Project Main Settings
-                                                                </div>
-                                                                <div class="kt-wizard-v2__review-content">
-                                                                    John Wick<br />
-                                                                    Phone: +61412345678<br />
-                                                                    Email: johnwick@reeves.com
-                                                                </div>
-                                                            </div>
-                                                            <div class="kt-wizard-v2__review-item">
-                                                                <div class="kt-wizard-v2__review-title">
-                                                                    Competition
-                                                                </div>
-                                                                <div class="kt-wizard-v2__review-content">
-                                                                    Address Line 1<br />
-                                                                    Address Line 2<br />
-                                                                    Melbourne 3000, VIC, Australia
-                                                                </div>
-                                                            </div>
-                                                            <div class="kt-wizard-v2__review-item">
-                                                                <div class="kt-wizard-v2__review-title">
-                                                                    Tracked Keywords
-                                                                </div>
-                                                                <div class="kt-wizard-v2__review-content">
-                                                                    343 tracked keywords<br />
-                                                                </div>
-                                                            </div>
-                                                            <div class="kt-wizard-v2__review-item">
-                                                                <div class="kt-wizard-v2__review-title">
-                                                                    Module Settings
-                                                                </div>
-                                                                <div class="kt-wizard-v2__review-content">
-                                                                    Address Line 1<br />
-                                                                    Address Line 2<br />
-                                                                    Preston 3072, VIC, Australia
-                                                                </div>
-                                                            </div>
-                                                            <div class="kt-wizard-v2__review-item">
-                                                                <div class="kt-wizard-v2__review-title">
-                                                                    Email Settings
-                                                                </div>
-                                                                <div class="kt-wizard-v2__review-content">
-                                                                    Card Number: xxxx xxxx xxxx 1111<br />
-                                                                    Card Name: John Wick<br />
-                                                                    Card Expiry: 01/21
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <!--end: Form Wizard Step 6-->
-
+--}}
                                                 <!--begin: Form Actions -->
                                                 <div class="kt-form__actions">
-                                                    <div class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" data-ktwizard-type="action-prev">
+                                                   {{-- <div class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" data-ktwizard-type="action-prev">
                                                         Previous
                                                     </div>
                                                     <div class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" data-ktwizard-type="action-submit">
                                                         Submit
-                                                    </div>
+                                                    </div>--}}
                                                     <div class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" data-ktwizard-type="action-next">
-                                                        Next Step
+                                                        <input type="submit" name="save"  value="SAVE" class="btn btn-primary btn-lg"></input>
+                                                        <input type="submit" name="save_add_keyword" value="SAVE & ADD KEYWORD" class="btn btn-primary btn-lg"></input>
+
+{{--                                                        Next Step--}}
                                                     </div>
                                                 </div>
 
@@ -1816,9 +1610,9 @@
                 Demo 1
             </div>
             <div class="kt-demo-panel__item-preview">
-                <img src="./assets/media/demos/preview/demo5.jpg" alt="" />
+                <img src="./assets/media/demos/preview/demo1.jpg" alt="" />
                 <div class="kt-demo-panel__item-preview-overlay">
-                    <a href="demo5/index.html" class="btn btn-brand btn-elevate " target="_blank">Preview</a>
+                    <a href="demo1/index.html" class="btn btn-brand btn-elevate " target="_blank">Preview</a>
                 </div>
             </div>
         </div>
@@ -1917,7 +1711,7 @@
             <div class="kt-demo-panel__item-preview">
                 <img src="./assets/media/demos/preview/demo10.jpg" alt="" />
                 <div class="kt-demo-panel__item-preview-overlay">
-                    <a href="demo50/index.html" class="btn btn-brand btn-elevate " target="_blank">Preview</a>
+                    <a href="demo10/index.html" class="btn btn-brand btn-elevate " target="_blank">Preview</a>
                 </div>
             </div>
         </div>
@@ -1928,7 +1722,7 @@
             <div class="kt-demo-panel__item-preview">
                 <img src="./assets/media/demos/preview/demo11.jpg" alt="" />
                 <div class="kt-demo-panel__item-preview-overlay">
-                    <a href="demo51/index.html" class="btn btn-brand btn-elevate " target="_blank">Preview</a>
+                    <a href="demo11/index.html" class="btn btn-brand btn-elevate " target="_blank">Preview</a>
                 </div>
             </div>
         </div>
@@ -1939,7 +1733,7 @@
             <div class="kt-demo-panel__item-preview">
                 <img src="./assets/media/demos/preview/demo12.jpg" alt="" />
                 <div class="kt-demo-panel__item-preview-overlay">
-                    <a href="demo52/index.html" class="btn btn-brand btn-elevate " target="_blank">Preview</a>
+                    <a href="demo12/index.html" class="btn btn-brand btn-elevate " target="_blank">Preview</a>
                 </div>
             </div>
         </div>
@@ -2271,15 +2065,95 @@
 <!--end:: Global Optional Vendors -->
 
 <!--begin::Global Theme Bundle(used by all pages) -->
-<script src="./assets/js/demo5/scripts.bundle.js" type="text/javascript"></script>
+<script src="./assets/js/demo1/scripts.bundle.js" type="text/javascript"></script>
 
 <!--end::Global Theme Bundle -->
 
 <!--begin::Page Scripts(used by this page) -->
-<script src="./assets/js/demo5/pages/wizard/wizard-2.js" type="text/javascript"></script>
+<script src="./assets/js/demo1/pages/wizard/wizard-2.js" type="text/javascript"></script>
 
 <!--end::Page Scripts -->
 </body>
 
 <!-- end::Body -->
 </html>
+
+
+
+<script>
+    $(document).ready(function(){
+
+        $('#se_name').keyup(function(){
+
+            var query = $(this).val();
+
+            if(query != '')
+            {
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url:"{{route('search.engine') }}",
+                    method:"POST",
+                    data:{query:query, _token:_token},
+                    success:function(data){
+                        $('#search_engine').fadeIn();
+                        $('#search_engine').html(data);
+                        /*return  $('#search_engine').html(data);*/
+                    }
+                });
+            }
+
+            $('#search_engine').on('click', 'li', function(){
+                $('#se_name').val($(this).text());
+                $('#search_engine').fadeOut();
+
+            });
+        });
+
+        $('#se_name').change(function(){
+            var se_engine = $('#se_name').val();
+            //console.log(se_engine);
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                url:"{{route('search.language') }}",
+                method:"POST",
+                data:{query:se_engine, _token:_token},
+                success:function(data){
+                    $('#search_language').fadeIn();
+                    $('#search_language').html(data);
+                }
+            });
+        });
+
+
+
+        $('#search_language').on('click', 'li', function(){
+
+            $('#se_language').val($(this).text());
+            $('#search_language').fadeOut();
+        });
+
+        $('#se_location').keyup(function(){
+            var query = $(this).val();
+            if(query != '')
+            {
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url:"{{ route('search.location') }}",
+                    method:"POST",
+                    data:{query:query, _token:_token},
+                    success:function(data){
+                        $('#search_location').fadeIn();
+                        $('#search_location').html(data);
+                    }
+                });
+            }
+        });
+
+        $('#search_location').on('click', 'li', function(){
+
+            $('#se_location').val($(this).text());
+            $('#search_location').fadeOut();
+
+        });
+    });
+</script>

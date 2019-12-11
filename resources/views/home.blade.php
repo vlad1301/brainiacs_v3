@@ -724,12 +724,44 @@
 
                             <!--end: Language bar -->
 
+                            <ul class="navbar-nav ml-auto">
+                                <!-- Authentication Links -->
+                                @guest
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    </li>
+                                    @if (Route::has('register'))
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                        </li>
+                                    @endif
+                                @else
+                                    <li class="nav-item dropdown">
+                                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                            {{ Auth::user()->name }} <span class="caret"></span>
+                                        </a>
+
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                            <a class="dropdown-item" href="{{ route('logout') }}"
+                                               onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                                {{ __('Logout') }}
+                                            </a>
+
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                @csrf
+                                            </form>
+                                        </div>
+                                    </li>
+                                @endguest
+                            </ul>
+
                             <!--begin: User bar -->
                             <div class="kt-header__topbar-item kt-header__topbar-item--user">
                                 <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,10px">
                                     <span class="kt-hidden kt-header__topbar-welcome">Hi,</span>
                                     <span class="kt-hidden kt-header__topbar-username">Nick</span>
-                                    <img class="kt-hidden-" alt="Pic" src="../assets/media/users/300_21.jpg" />
+                                    <img class="kt-hidden-" alt="Pic" src="../assets/media/users/poza cv.jpg" />
                                     <span class="kt-header__topbar-icon kt-header__topbar-icon--brand kt-hidden"><b>S</b></span>
                                 </div>
                                 <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-xl">
@@ -737,13 +769,13 @@
                                     <!--begin: Head -->
                                     <div class="kt-user-card kt-user-card--skin-light kt-notification-item-padding-x">
                                         <div class="kt-user-card__avatar">
-                                            <img class="kt-hidden-" alt="Pic" src="../assets/media/users/300_25.jpg" />
+                                            <img class="kt-hidden-" alt="Pic" src="../assets/media/users/poza cv.jpg" />
 
                                             <!--use below badge element instead the user avatar to display username's first letter(remove kt-hidden class to display it) -->
                                             <span class="kt-badge kt-badge--username kt-badge--unified-success kt-badge--lg kt-badge--rounded kt-badge--bold kt-hidden">S</span>
                                         </div>
                                         <div class="kt-user-card__name">
-                                            Sean Stone
+                                            {{ Auth::user()->name }}
                                         </div>
                                         <div class="kt-user-card__badge">
                                             <span class="btn btn-label-primary btn-sm btn-bold btn-font-md">23 messages</span>
@@ -828,7 +860,6 @@
                                     <!--end: Navigation -->
                                 </div>
                             </div>
-
                             <!--end: User bar -->
                         </div>
 

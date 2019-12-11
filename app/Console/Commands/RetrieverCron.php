@@ -102,7 +102,7 @@ class RetrieverCron extends Command
     $user_id = Task::where('task_API_id', 'LIKE', $result['task_id'])->value('user_id');
     $project_id = Task::where('task_API_id', 'LIKE', $result['task_id'])->value('project_id');
 
-    $result_time = substr($result['result_datetime'], 0, 15);
+    $result_time = substr($result['result_datetime'], 0, 10);
     /*                    'result_datetime'=>$result['result_datetime']*/
     /*                    $substring = substr($string,$start,$length);*/
     Result::create(['task_id' => $task_id, 'keyword_id' => $result['key_id'], 'project_id' => $project_id, 'user_id' => $user_id, 'result_task_id' => $result['task_id'],
